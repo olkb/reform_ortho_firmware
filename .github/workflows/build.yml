@@ -28,7 +28,10 @@ jobs:
 
     - name: 'Checkout qmk_firmware'
       if: steps.cache-qmk_firmware-restore.outputs.cache-hit != 'true'
-      run: git submodule update --init --recursive
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+      # run: git submodule update --init --recursive
 
     # - run: |
     #     echo 'QMK_JSON<<EOF' >> $GITHUB_ENV
