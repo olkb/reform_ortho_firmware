@@ -14,11 +14,39 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      # with:
+      #   submodules: recursive
+      #   ref: ${{ github.event.inputs.branch || github.ref }}
+
+    - name: 'Restore qmk_firmware from cache'
+      id: cache-qmk_firmware-restore
+      uses: actions/cache/restore@v3
       with:
-        submodules: recursive
-        ref: ${{ github.event.inputs.branch || github.ref }}
-        
-    - uses: actions/checkout@v3
+        path: |
+          qmk_firmware
+        key: qmk_firmware
+
+    - name: 'Checkout qmk_firmware'
+      if: steps.cache-qmk_firmware-restore.outputs.cache-hit != 'true'
+      run: git submodule update --init --recursive
+
+    # - run: |
+    #     echo 'QMK_JSON<<EOF' >> $GITHUB_ENV
+    #     cat ./qmk.json >> $GITHUB_ENV
+    #     echo 'EOF' >> $GITHUB_ENV
+    # - run: |
+    #     echo '${{ fromJson(env.QMK_JSON).qmk_version }}'
+
+    - name: 'Save qmk_firmware to cache'
+      id: cache-qmk_firmware-save
+      uses: actions/cache/save@v3
+      with:
+        path: |
+          qmk_firmware
+        key: ${{ steps.cache-qmk_firmware-restore.outputs.cache-primary-key }}
+
+    - name: 'Checkout qmk_cli'
+      uses: actions/checkout@v3
       with:
         repository: jackhumbert/qmk_cli
         ref: exodus_experiments
