@@ -18,6 +18,13 @@ jobs:
       #   submodules: recursive
       #   ref: ${{ github.event.inputs.branch || github.ref }}
 
+      # - run: |
+      #     echo 'QMK_JSON<<EOF' >> $GITHUB_ENV
+      #     cat ./qmk.json >> $GITHUB_ENV
+      #     echo 'EOF' >> $GITHUB_ENV
+      # - run: |
+      #     echo '${{ fromJson(env.QMK_JSON).qmk_version }}'
+
     - name: 'Restore qmk_firmware from cache'
       id: cache-qmk_firmware-restore
       uses: actions/cache/restore@v3
@@ -33,14 +40,8 @@ jobs:
         submodules: recursive
       # run: git submodule update --init --recursive
 
-    # - run: |
-    #     echo 'QMK_JSON<<EOF' >> $GITHUB_ENV
-    #     cat ./qmk.json >> $GITHUB_ENV
-    #     echo 'EOF' >> $GITHUB_ENV
-    # - run: |
-    #     echo '${{ fromJson(env.QMK_JSON).qmk_version }}'
-
     - name: 'Save qmk_firmware to cache'
+      if: steps.cache-qmk_firmware-restore.outputs.cache-hit != 'true'
       id: cache-qmk_firmware-save
       uses: actions/cache/save@v3
       with:
