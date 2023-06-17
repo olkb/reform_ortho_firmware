@@ -1,0 +1,42 @@
+name: Build
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches: main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: ghcr.io/qmk/qmk_base_container
+
+    steps:
+    - uses: action/checkout@v3
+      with:
+        submodules: recursive
+        ref: ${{ github.event.inputs.branch || github.ref }}
+        
+    - uses: actions/checkout@v3
+      with:
+        repository: jackhumbert/qmk_cli
+        path: qmk_cli
+    
+    - name: 'Install dependencies'
+      run: pip3 install -r qmk_firmware/requirements.txt
+
+    - name: 'Compile default keymap'
+      run: ./qmk_cli/qmk compile -kb reform_ortho/reform_ortho -km default
+
+    - name: 'Upload artifacts'
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: artifacts-${{ github.event.inputs.branch || github.ref_name }}
+        if-no-files-found: ignore
+        path: |
+          *.bin
+          *.hex
+          *.uf2
+          .build/failed.*
