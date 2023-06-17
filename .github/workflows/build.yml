@@ -21,6 +21,7 @@ jobs:
     - uses: actions/checkout@v3
       with:
         repository: jackhumbert/qmk_cli
+        ref: exodus_experiments
         path: qmk_cli
     
     - name: 'Install dependencies'
