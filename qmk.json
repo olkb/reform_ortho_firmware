@@ -1,0 +1,6 @@
+{
+    "type": "device",
+    "qmk_version": "qmk_firmware",
+    "module_name": "reform_ortho",
+    "module_version": "1.0.0"
+}
