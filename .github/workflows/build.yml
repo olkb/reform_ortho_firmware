@@ -25,13 +25,16 @@ jobs:
       # - run: |
       #     echo '${{ fromJson(env.QMK_JSON).qmk_version }}'
 
+    - name: 'Set qmk_firmware version'
+      run: echo "QMK_FIRMWARE_COMMIT=$(git submodule status qmk_firmware | awk '{print $1}')" >> $GITHUB_ENV
+
     - name: 'Restore qmk_firmware from cache'
       id: cache-qmk_firmware-restore
       uses: actions/cache/restore@v3
       with:
         path: |
           qmk_firmware
-        key: qmk_firmware
+        key: qmk_firmware-${{ env.QMK_FIRMWARE_COMMIT }}
 
     - name: 'Checkout qmk_firmware'
       if: steps.cache-qmk_firmware-restore.outputs.cache-hit != 'true'
