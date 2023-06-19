@@ -91,6 +91,6 @@ jobs:
       with:
         NAME: qmk_version
         LABEL: 'Ψ v0.20.10'
-        STATUS: ${{ job.qmk_firmware.status }}
-        COLOR: ${{ job.qmk_firmare.status == 'success' && '16c964' || 'red' }}
+        STATUS: ${{ job.qmk_firmware.result }}
+        COLOR: ${{ job.qmk_firmare.result == 'success' && '16c964' || 'red' }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
