@@ -1,6 +1,6 @@
 ## Reform Ortho
 
-[![QMK Firmware](https://github.com/olkb/reform_ortho_firmware/actions/workflows/qmk_firmware.yml/badge.svg)](https://github.com/olkb/reform_ortho_firmware/actions/workflows/qmk_firmware.yml)
+![](https://byob.yarr.is/olkb/reform_ortho_firmware/qmk_version)
 
 ![Reform Ortho](https://i.redd.it/teckwqi8zt871.png)
 

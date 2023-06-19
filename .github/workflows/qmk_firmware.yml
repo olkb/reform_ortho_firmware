@@ -28,7 +28,7 @@ jobs:
     - name: 'Set qmk_firmware version'
       run: |
         git config --global --add safe.directory /__w/reform_ortho_firmware/reform_ortho_firmware
-        echo "QMK_FIRMWARE_COMMIT=$(git submodule status qmk_firmware | awk '{print $1}')" >> $GITHUB_ENV
+        echo "QMK_FIRMWARE_VERSION=$(git submodule status qmk_firmware | awk '{print $1}')" >> $GITHUB_ENV
 
     - name: 'Restore qmk_firmware from cache'
       id: cache-qmk_firmware-restore
@@ -36,7 +36,7 @@ jobs:
       with:
         path: |
           qmk_firmware
-        key: qmk_firmware-${{ env.QMK_FIRMWARE_COMMIT }}
+        key: qmk_firmware-${{ env.QMK_FIRMWARE_VERSION }}
 
     - name: 'Checkout qmk_firmware'
       if: steps.cache-qmk_firmware-restore.outputs.cache-hit != 'true'
@@ -65,7 +65,17 @@ jobs:
       run: pip3 install -r qmk_firmware/requirements.txt
 
     - name: 'Compile default keymaps'
+      id: compile
       run: ./qmk_cli/qmk module-compile -e SKIP_VERSION=true
+
+    - name: 'Version Badge'
+      uses: RubbaBoy/BYOB@1.3.0
+      with:
+        NAME: qmk_version
+        LABEL: 'Ψ v0.20.10'
+        STATUS: ${{ job.status }}
+        COLOR: ${{ job.status == 'success' && '16c964' || 'red' }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: 'Upload artifacts'
       uses: actions/upload-artifact@v3
