@@ -59,8 +59,8 @@ jobs:
     - name: 'Install dependencies'
       run: pip3 install -r qmk_firmware/requirements.txt
 
-    - name: 'Compile default keymap'
-      run: ./qmk_cli/qmk compile -kb reform_ortho/reform_ortho -km default -e SKIP_VERSION=true
+    - name: 'Compile default keymaps'
+      run: ./qmk_cli/qmk module-compile -e SKIP_VERSION=true
 
     - name: 'Upload artifacts'
       uses: actions/upload-artifact@v3
