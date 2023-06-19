@@ -26,7 +26,9 @@ jobs:
       #     echo '${{ fromJson(env.QMK_JSON).qmk_version }}'
 
     - name: 'Set qmk_firmware version'
-      run: echo "QMK_FIRMWARE_COMMIT=$(git submodule status qmk_firmware | awk '{print $1}')" >> $GITHUB_ENV
+      run: |
+        git config --global --add safe.directory .
+        echo "QMK_FIRMWARE_COMMIT=$(git submodule status qmk_firmware | awk '{print $1}')" >> $GITHUB_ENV
 
     - name: 'Restore qmk_firmware from cache'
       id: cache-qmk_firmware-restore
