@@ -81,6 +81,8 @@ jobs:
           .build/failed.*
   badge:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # To push a branch 
     needs: qmk_firmware
     if: ${{ always() }}
     steps:
