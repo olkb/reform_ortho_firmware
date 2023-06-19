@@ -88,5 +88,5 @@ jobs:
         NAME: qmk_version
         LABEL: 'Ψ v0.20.10'
         STATUS: ${{ steps.compile.outcome }}
-        COLOR: ${{ steps.compile.outcome == 'success' && '16c964' || 'red' }}
+        COLOR: ${{ steps.compile.outcome == 'success' && '31b75d' || 'red' }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
