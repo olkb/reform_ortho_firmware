@@ -10,6 +10,8 @@ on:
 jobs:
   qmk_firmware:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # To push a branch 
     container: ghcr.io/qmk/qmk_base_container
 
     steps:
@@ -79,18 +81,12 @@ jobs:
           *.hex
           *.uf2
           .build/failed.*
-  badge:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write  # To push a branch 
-    needs: qmk_firmware
-    if: ${{ always() }}
-    steps:
+
     - name: 'Version Badge'
       uses: RubbaBoy/BYOB@v1.3.0
       with:
         NAME: qmk_version
         LABEL: 'Ψ v0.20.10'
-        STATUS: ${{ jobs.qmk_firmware.result }}
-        COLOR: ${{ jobs.qmk_firmare.result == 'success' && '16c964' || 'red' }}
+        STATUS: ${{ steps.compile.outcome }}
+        COLOR: ${{ steps.compile.outcome == 'success' && '16c964' || 'red' }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
