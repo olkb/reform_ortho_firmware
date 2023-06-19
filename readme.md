@@ -1,5 +1,7 @@
 ## Reform Ortho
 
+[![QMK Firmware](https://github.com/olkb/reform_ortho_firmware/actions/workflows/qmk_firmware.yml/badge.svg)](https://github.com/olkb/reform_ortho_firmware/actions/workflows/qmk_firmware.yml)
+
 ![Reform Ortho](https://i.redd.it/teckwqi8zt871.png)
 
 A MNT Reform-compatible keyboard that fits both the [laptop](https://shop.mntre.com/products/mnt-reform) and [standalone keyboard](https://shop.mntre.com/products/mnt-reform-usb-keyboard-standalone).

@@ -1,4 +1,4 @@
-name: Build
+name: QMK Firmware
 
 permissions:
   contents: read
@@ -8,7 +8,7 @@ on:
     branches: main
 
 jobs:
-  build:
+  qmk_firmware:
     runs-on: ubuntu-latest
     container: ghcr.io/qmk/qmk_base_container
 
