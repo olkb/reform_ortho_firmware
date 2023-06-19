@@ -68,15 +68,6 @@ jobs:
       id: compile
       run: ./qmk_cli/qmk module-compile -e SKIP_VERSION=true
 
-    - name: 'Version Badge'
-      uses: RubbaBoy/BYOB@v1.3.0
-      with:
-        NAME: qmk_version
-        LABEL: 'Ψ v0.20.10'
-        STATUS: ${{ job.status }}
-        COLOR: ${{ job.status == 'success' && '16c964' || 'red' }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
     - name: 'Upload artifacts'
       uses: actions/upload-artifact@v3
       if: always()
@@ -88,3 +79,16 @@ jobs:
           *.hex
           *.uf2
           .build/failed.*
+  badge:
+    runs-on: ubuntu-latest
+    needs: qmk_firmware
+    if: ${{ always() }}
+    steps:
+    - name: 'Version Badge'
+      uses: RubbaBoy/BYOB@v1.3.0
+      with:
+        NAME: qmk_version
+        LABEL: 'Ψ v0.20.10'
+        STATUS: ${{ job.qmk_firmware.status }}
+        COLOR: ${{ job.qmk_firmare.status == 'success' && '16c964' || 'red' }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
