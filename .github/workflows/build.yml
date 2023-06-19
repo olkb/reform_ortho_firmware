@@ -27,7 +27,7 @@ jobs:
 
     - name: 'Set qmk_firmware version'
       run: |
-        git config --global --add safe.directory .
+        git config --global --add safe.directory /__w/reform_ortho_firmware/reform_ortho_firmware
         echo "QMK_FIRMWARE_COMMIT=$(git submodule status qmk_firmware | awk '{print $1}')" >> $GITHUB_ENV
 
     - name: 'Restore qmk_firmware from cache'
